@@ -1,7 +1,8 @@
 # LeagueSearcher
+https://epicsenseii.github.io/LeagueSearcher/
+
 League of legends player searcher, using vueJs
 
-https://epicsenseii.github.io/LeagueSearcher/
 
 This is in developpement !
 
