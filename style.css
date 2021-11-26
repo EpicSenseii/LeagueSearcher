@@ -1,0 +1,49 @@
+#app {
+  margin-top: 20px;
+}
+
+.container {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+}
+
+.title {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 42px;
+}
+
+.info {
+  font-size: 12px;
+  margin-bottom: 50px;
+}
+
+.formInput {
+  margin: 0 auto;
+  float: none;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.btn {
+  box-shadow: none !important;
+  margin-bottom: 20px;
+}
+
+.card {
+  margin: 0 auto;
+  float: none;
+}
+
+.cardImg {
+  object-fit: cover;
+}
+
+.card-text {
+  font-size: 20px;
+}
+
+.footerText {
+  font-size: 14px;
+  color: rgb(110, 110, 110);
+}
