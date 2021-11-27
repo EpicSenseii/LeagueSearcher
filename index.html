@@ -31,9 +31,8 @@
   <body>
     <div id="app">
       <div class="container text-center">
-
         <h1 class="title">Search for player :</h1>
-        
+
         <p class="info">This only works in EUW region</p>
 
         <div class="formInput mb-3 col-md-2">
@@ -56,7 +55,7 @@
         >
           Search
         </button>
-
+        
         <div v-show="showCard" class="card" style="width: 15rem">
           <img :src="IconCall" class="cardImg card-img-top" alt="..." />
           <div class="card-body">
@@ -66,12 +65,13 @@
             Level {{data.summonerLevel}}
           </div>
         </div>
+        <div class="rankedInfo" v-show="showRank">
+          <img class="rankImg" :src="rank" alt="">
+          <p>{{division}}</p>
+          <p>{{winRatioFixed}}% win rate</p>
+        </div>
       </div>
-      <div v-show="showInGame">
-<!--         <p>in game</p> -->
       </div>
-    </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script

@@ -2,11 +2,17 @@ var app = new Vue({
   el: "#app",
   data () {
     return {
-      API_KEY: "RGAPI-b4e1b702-a21d-4b91-8bc4-6eaac2fb7533",
+      API_KEY: "RGAPI-2f64ad44-5586-4645-b2ad-8a84964a8967",
       IconCall: "",
       data : "",
       showCard: "",
+      showRank: "",
       showInGame: "",
+      playerRank: "",
+      rank: "",
+      division: "",
+      winRatio: "",
+      winRatioFixed: "",
       // gameStatut: "",
     }
   },
@@ -16,8 +22,6 @@ var app = new Vue({
     async getPlayer() {
       this.searchText = document.querySelector(".searchText").value;
       this.APICall = "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/" + this.searchText + "?api_key=" + this.API_KEY;
-      // console.log(this.searchText);
-      // console.log(this.APICall);
       const response = await fetch(this.APICall);
       this.data = await response.json();
       console.log(this.data);
@@ -25,8 +29,10 @@ var app = new Vue({
       
       this.toggleCard()
       this.toggleInGame()
-      this.getGameStatut()
+      // this.toggleRank()
+      // this.getGameStatut()
       this.getMasteries()
+      this.getRank()
     },
     
     toggleCard() {
@@ -35,12 +41,88 @@ var app = new Vue({
     toggleInGame() {
       JSON.stringify(this.gameStatut) != '{}' ? this.showInGame=true : this.showInGame=false;
     },
+    // toggleRank() {
+    //   JSON.stringify(this.playerRank[0]) != '{}' ? this.showRank=true : this.showRank=false;
+    // },
 
+   
     async getGameStatut() {
      this.GameAPI = "https://euw1.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/" + this.data.id + "?api_key=" + this.API_KEY;
      const res = await fetch(this.GameAPI);
      this.gameStatut = await res.json();
      console.log(this.gameStatut);
+    },
+
+    async getRank() {
+      this.GameAPI = "https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/" + this.data.id + "?api_key=" + this.API_KEY;
+      const response = await fetch(this.GameAPI);
+      this.playerRank = await response.json();
+      if (this.playerRank[0]) {
+        this.showRank=true;
+        if (this.playerRank[0] <= this.playerRank[1]) {
+          this.playerRank[0].tier = this.playerRank[1].tier
+        }
+        this.rank = this.playerRank[0].tier;
+        this.division = this.playerRank[0].rank;
+        this.totalGames = this.playerRank[0].wins + this.playerRank[0].losses;
+        this.winRatio = this.playerRank[0].wins / this.totalGames * 100;
+        this.winRatioFixed = this.winRatio.toFixed(0);
+        console.log(this.winRatio);
+        console.log(this.rank);
+        console.log(this.playerRank[0].wins);
+        console.log(this.playerRank[0].losses);
+  
+  
+  
+        switch (this.division) {
+          case "":
+            this.division = ""
+            console.log("division is null");
+            break;
+        
+          default:
+            break;
+        }
+        
+        switch (this.rank) {
+          case "IRON":
+            this.rank = "assets/rankedIcons/Emblem_Iron.png"
+            break;
+          case "BRONZE":
+            this.rank = "assets/rankedIcons/Emblem_Bronze.png"
+            break;
+          case "SILVER":
+            this.rank = "assets/rankedIcons/Emblem_Silver.png"
+            break;
+          case "GOLD":
+            this.rank = "assets/rankedIcons/Emblem_Gold.png"
+            break;
+          case "PLATINUM":
+            this.rank = "assets/rankedIcons/Emblem_Platinum.png"
+            break;
+          case "DIAMOND":
+            this.rank = "assets/rankedIcons/Emblem_Diamond.png"
+            break;
+          case "MASTER":
+            this.rank = "assets/rankedIcons/Emblem_Master.png"
+            break;
+          case "GRANDMASTER":
+            this.rank = "assets/rankedIcons/Emblem_Grandmaster.png"
+            break;
+          case "CHALLENGER":
+            this.rank = "assets/rankedIcons/Emblem_Challenger.png"
+            break;
+          case "{}":
+            this.rank = "{}"
+            console.log("rank is null");
+            break;
+          default:
+            break;
+        }
+      }else {
+        this.showRank=false;
+        console.log("no ranked");
+      }
     },
 
     async getMasteries() {

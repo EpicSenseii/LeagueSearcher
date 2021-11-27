@@ -33,6 +33,7 @@
 .card {
   margin: 0 auto;
   float: none;
+  margin-bottom: 20px;
 }
 
 .cardImg {
@@ -46,4 +47,8 @@
 .footerText {
   font-size: 14px;
   color: rgb(110, 110, 110);
+}
+
+.rankImg {
+  width: 150px;
 }
